@@ -176,3 +176,8 @@ counts.maize.group<-ddply(maize.class.sorted,c("Group"),summarise,total_homozygo
 maize.counts.group.combined<-melt(counts.maize.group,measure.vars = c("total_homozygous","total_heterozygous","total_NA"))
 ggplot(maize.counts.group.combined,aes(x=Group,y=value,fill=variable))+geom_bar(stat="identity",position = "stack")
 ```
+
+#My own visualization 2 - Most common types of nucleotides across sites
+```{r}
+ggplot(fang.tidy)+ geom_bar(aes(fang.tidy$value))+xlab("value") +ylab("Number of observations")
+```
