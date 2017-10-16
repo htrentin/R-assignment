@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ##### R-Assignment ######
 #Part 1
-# Downloading files necessary for the assignment
+#Downloading files necessary for the assignment
 ```{r}
 fangetal <- read.delim("https://raw.githubusercontent.com/EEOB-BioData/BCB546X-Fall2017/master/UNIX_Assignment/fang_et_al_genotypes.txt", header=TRUE)
 snp_position <-read.delim("https://raw.githubusercontent.com/EEOB-BioData/BCB546X-Fall2017/master/UNIX_Assignment/snp_position.txt", header=TRUE)
@@ -27,8 +27,8 @@ class(snp_position)
 ```
 
 #Data Processing
-#Extracting all data besides columns Sample_ID and JG_IDU. 
-# The group columns is necessary to select maize and teosinte genotypes
+#Extracting all data besides columns Sample_ID and JG_IDU
+#The group column is necessary to select maize and teosinte genotypes
 ```{r}
 fang.extracted <- fangetal[,3:986]
 maize <- subset(fang.extracted, Group == "ZMMIL" | Group == "ZMMLR" | Group=="ZMMMR")
@@ -175,4 +175,9 @@ maize.class.sorted<-arrange(maize.tidy,Sample_ID,Group)
 counts.maize.group<-ddply(maize.class.sorted,c("Group"),summarise,total_homozygous=sum(hom.het,na.rm=TRUE),total_heterozygous=sum(!hom.het,na.rm = TRUE), total_NA=sum(is.na(hom.het)))
 maize.counts.group.combined<-melt(counts.maize.group,measure.vars = c("total_homozygous","total_heterozygous","total_NA"))
 ggplot(maize.counts.group.combined,aes(x=Group,y=value,fill=variable))+geom_bar(stat="identity",position = "stack")
+```
+
+#My own visualization 2 - Most common types of nucleotides across sites
+```{r}
+ggplot(fang.tidy)+ geom_bar(aes(fang.tidy$value))+xlab("nucleotide") +ylab("Number of observations")
 ```
